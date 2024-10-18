@@ -1,0 +1,8 @@
+services:
+  fs:
+    image: factorio-server
+    container_name: the_factory
+    tty: true
+    stdin_open: true
+    ports:
+     - "34197:34197/udp"
