@@ -12,4 +12,8 @@ ARG USER=gamemaster
 ARG GROUP=factorio
 
 #taking my deployed server files and shoving them into this image
-COPY ./opt/ /factorio
+COPY factorio factorio
+#not opt/factorio
+#not /factorio
+COPY factorio.service /etc/systemd/system
+COPY server-settings.json /opt/factorio/data/server-settings.json

@@ -6,3 +6,4 @@ services:
     stdin_open: true
     ports:
      - "34197:34197/udp"
+
