@@ -19,3 +19,8 @@ Build might be a strong word, but we needs the files to run the Factorio dedicat
 
 # Step 3 - Actually Build The Server
 You can either run build.sh (builds the image) and run.sh (turns the image into a container) seperately or run b, which does both sequentially. After that completes, the container should be up and the server should be functional.
+
+
+# Upcoming changes
+- Currently these aren't accessible online, I need to troubleshoot that. They show in the game list but you can't connect.
+- Phase 2, trying to add rclone to sync the save file from the server to cloud storage.
