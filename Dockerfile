@@ -17,3 +17,6 @@ COPY factorio factorio
 #not /factorio
 COPY factorio.service /etc/systemd/system
 COPY server-settings.json /opt/factorio/data/server-settings.json
+
+CMD /opt/factorio/bin/x64/factorio --server-settings /opt/factorio/data/server-settings.json --start-server-load-latest --console-log /opt/Factorio.log
+
