@@ -1,11 +1,11 @@
 #!/bin/bash
 echo "Thanks for the write up /u/Gremia!"
-echo "Setting network permissions.."
-sudo ufu allow openssh
-sudo ufw allow 34197/udp
-sudo ufw enable
-echo "Adding botnet blocking..."
-sudo apt-get install -y fail2ban
+#echo "Setting network permissions.."
+#sudo ufu allow openssh
+#sudo ufw allow 34197/udp
+#sudo ufw enable
+#echo "Adding botnet blocking..."
+#sudo apt-get install -y fail2ban
 echo "Downloading the latest headless server..."
 wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
 echo "Preparing files..."
