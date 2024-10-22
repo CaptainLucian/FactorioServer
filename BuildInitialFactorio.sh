@@ -7,7 +7,8 @@ echo "Thanks for the write up /u/Gremia!"
 #echo "Adding botnet blocking..."
 #sudo apt-get install -y fail2ban
 echo "Downloading the latest headless server..."
-wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
+wget -c https://factorio.com/get-download/stable/headless/linux64 -O factorio-server.tar.xz
+#wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
 echo "Preparing files..."
 tar xf factorio-server.tar.xz
 rm factorio-server.tar.xz
