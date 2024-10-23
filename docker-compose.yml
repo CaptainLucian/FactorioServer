@@ -7,11 +7,11 @@ services:
     ports:
      - "34197:34197/udp"
     volumes:
-     - save-data:/opt/factorio/saves
+     - ./saves:/opt/factorio/saves
     environment:
      - TZ=America/Chicago
 
 volumes:
   save-data:
-    external: false
+    external: true
 
