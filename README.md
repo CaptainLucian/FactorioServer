@@ -21,7 +21,9 @@ Build might be a strong word, but we needs the files to run the Factorio dedicat
 You can either run build.sh (builds the image) and run.sh (turns the image into a container) seperately or run b, which does both sequentially. After that completes, the container should be up and the server should be functional.
 
 # Optional Steps/Usability Notes
-I've moved the saves into an external volume linked to the FactorioTest directory /saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC, either access a Linux terminal in some way (WSL) to copy the file over with scp or get cloud saves configured and do a manual pull to that directory.
+I've moved the saves into an external volume linked to the FactorioTest directory /saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC you can use scp in the Windows command line to transfer the file over. Open the saves folder in Explorer, right-click, "Open in Terminal" and do something like `scp savefile.zip linuxuser@linuxipaddress:/home/FactorioTest/`. You'll need to move the file into the /saves folder on the server side, as that will require sudo permissions to edit the volume.
+
+Mods are handled very similiarly to moving the save over. Download them on your local machine in game or through the mods site (https://mods.factorio.com). Go to %AppData%\factorio, open the folder in Terminal, `scp -r mods linuxuser@linuxipaddress:/home/`. You'll need to move the files into the /mods folder on the server side, as that will require sudo permissions to edit the volume. This move can be done en masse with `sudo cp -a ~/mods/. ~/FactorioTest/mods` ENSURE ALL MODS ARE COMPATIBLE WITH THE RELEASE THE SERVER IS ON, otherwise the server will fail to start. 
 
 Cloud Saves
 I've added an incredibly basic rclone script here, it just installs it and starts the configurator. rclone has a very friendly interface for setting up a connection to a cloud provider, and they have ample documentation on how to get that configured. I would suggest setting up a cronjob to copy the server save over at a regular interval. It should be as simple as putting a script file like:
@@ -30,6 +32,3 @@ I've added an incredibly basic rclone script here, it just installs it and start
 
 Public Connections
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
-
-# Upcoming changes
-- determine what it would take to add mod support
