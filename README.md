@@ -20,7 +20,16 @@ Build might be a strong word, but we needs the files to run the Factorio dedicat
 # Step 3 - Actually Build The Server
 You can either run build.sh (builds the image) and run.sh (turns the image into a container) seperately or run b, which does both sequentially. After that completes, the container should be up and the server should be functional.
 
+# Optional Steps/Usability Notes
+I've moved the saves into an external volume linked to the FactorioTest directory /saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC, either access a Linux terminal in some way (WSL) to copy the file over with scp or get cloud saves configured and do a manual initial pull to that directory.
+
+Cloud Saves
+I've added an incredibly basic rclone script here, it just installs it and starts the configurator. rclone has a very friendly interface for setting up a connection to a cloud provider, and they have ample documentation on how to get that configured. I would suggest setting up a cronjob to copy the server save over at a regular interval. It should be as simple as putting a script file like:
+`rclone copy ..fill/in/path/to/FactorioTest/saves "NameOfrcloneRemoteConnection:/LocationInRemoteConnection"
+` into the appropriate cronjob folder, or setting up a crontab if you want it to run other than hourly or daily. 
+
+Public Connections
+If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
 
 # Upcoming changes
-- Currently these aren't accessible online, I need to troubleshoot that. They show in the game list but you can't connect.
-- Phase 2, trying to add rclone to sync the save file from the server to cloud storage.
+- determine what it would take to add mod support
