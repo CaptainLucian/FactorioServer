@@ -7,8 +7,8 @@ services:
     ports:
      - "34197:34197/udp"
     volumes:
-     - ./saves:/opt/factorio/saves
-     - ./mods:/opt/factorio/mods
+     - ./ServerFiles/saves:/opt/factorio/saves
+     - ./ServerFiles/mods:/opt/factorio/mods
     environment:
      - TZ=America/Chicago
 

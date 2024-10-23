@@ -16,8 +16,8 @@ ARG GROUP=factorio
 COPY factorio factorio
 #not opt/factorio
 #not /factorio
-COPY factorio.service /etc/systemd/system
-COPY server-settings.json /opt/factorio/data/server-settings.json
+#COPY factorio.service /etc/systemd/system
+COPY /ServerFiles/server-settings.json /opt/factorio/data/server-settings.json
 
 SHELL ["/bin/bash", "-c"]
 
