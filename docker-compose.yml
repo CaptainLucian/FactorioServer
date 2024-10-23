@@ -6,4 +6,10 @@ services:
     stdin_open: true
     ports:
      - "34197:34197/udp"
+    volumes:
+     - save-data:/opt/factorio/saves
+
+volumes:
+  save-data:
+    external: false
 
