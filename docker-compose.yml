@@ -8,6 +8,8 @@ services:
      - "34197:34197/udp"
     volumes:
      - save-data:/opt/factorio/saves
+    environment:
+     - TZ=America/Chicago
 
 volumes:
   save-data:
