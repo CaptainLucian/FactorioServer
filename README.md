@@ -32,6 +32,3 @@ I've added an incredibly basic rclone script here, it just installs it and start
 
 Public Connections
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
-
-# Upcoming changes
-- determine what it would take to add mod support
