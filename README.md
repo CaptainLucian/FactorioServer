@@ -36,5 +36,5 @@ If you want the server to be publically available, you will need to set up port 
 # To Do
 - break server-settings into a volume so users don't need to build a new image (ideally)
 - see if I can publish an image so I can have a light "create container only" version of this
-- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers?
+- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods.
 - see about automating mod updates (refer to https://github.com/astevens/factorio-mod-updater), similarly would need to be a scheduled event to be hands off without breaking things
