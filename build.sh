@@ -1,2 +1,2 @@
 #!/bin/bash
-sudo docker build -t factorio-server .
+sudo docker build -t captainlucian/factorio-server .

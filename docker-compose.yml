@@ -1,6 +1,6 @@
 services:
   fs:
-    image: factorio-server
+    image: captainlucian/factorio-server:latest
     container_name: the_factory
     tty: true
     stdin_open: true
@@ -9,6 +9,7 @@ services:
     volumes:
      - ./ServerFiles/saves:/opt/factorio/saves
      - ./ServerFiles/mods:/opt/factorio/mods
+     - ./ServerFiles/server-settings.json:/opt/factorio/data/server-settings.json
     environment:
      - TZ=America/Chicago
 
