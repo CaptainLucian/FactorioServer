@@ -11,6 +11,8 @@ This set of scripts exists to
 
 The scripts were made on and for an Ubuntu 24.04 LTS server, the dockerfile and docker-compose.yml file should be OS agnostic but you'll need to build the Factorio server files another way if you are on a different OS. This also assumes docker is already installed.
 
+The intent is that anything that needs to be user edited or persistant lives in the /ServerFiles subdirectory. 
+
 # Step 1 - Configure the server-settings.json
 Before you build the image we need to get the server-settings.json filled out. Set the game name, description, your account information, etc, before building the image.
 
@@ -22,7 +24,7 @@ You can either run build.sh (builds the image) and run.sh (turns the image into 
 
 # Optional Steps/Usability Notes
 ## Saves
-I've moved the saves into an external volume linked to the FactorioTest directory /saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC you can use scp in the Windows command line to transfer the file over. Open the saves folder in Explorer, right-click, "Open in Terminal" and do something like `scp savefile.zip linuxuser@linuxipaddress:/home/FactorioTest/`. You'll need to move the file into the /saves folder on the server side, as that will require sudo permissions to edit the volume.
+I've moved the saves into an external volume linked to the FactorioTest directory ServerFiles/saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC you can use scp in the Windows command line to transfer the file over. Open the saves folder in Explorer, right-click, "Open in Terminal" and do something like `scp savefile.zip linuxuser@linuxipaddress:/home/FactorioTest/`. You'll need to move the file into the /saves folder on the server side, as that will require sudo permissions to edit the volume.
 
 ## Mods
 The container now utilizes a script to update mods on creation and restart. Create the initial container to create the volumes (including for mods), then update the existing mod-list.json file or copy over a mod-list.json file with all of your desired mods on it to the FactorioTest/ServerFiles/mods directory. When the container is restarted or receated, the enabled mods in the list will be downloaded. In order for the script to authenticate for mod downloads, you must provide an authentication token in the server-settings.json file instead of a password. ENSURE ALL MODS ARE COMPATIBLE WITH THE RELEASE THE SERVER IS ON, otherwise the server will fail to start. To recover from this scenario, mods will need to be manually deleted out of the mods folder, disabled in the mod-list.json, and then restart the container or create a new one. If it fails to continue running, there is likely another conflicting mod. 
@@ -37,3 +39,4 @@ If you want the server to be publically available, you will need to set up port 
 # To Do
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods. 
 - see about automating pushing new images to docker, making them is already done
+- continue breaking out image creation and container creation, try deploying a container without the build tools to determine what dependencies still exist, ideally it should just be the docker-compose.yml and run.sh (which even then is just to not need to type it manually).
