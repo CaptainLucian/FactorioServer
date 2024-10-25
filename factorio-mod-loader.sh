@@ -3,13 +3,13 @@
 #. $(dirname "$0")/factorio-mod-loader.env
 
 #Setting the mods folder to the default for this build
-MODS_FOLDER=~/FactorioTest/ServerFiles/mods
+MODS_FOLDER=/opt/factorio/mods
 #Pulling the username and token from the server settings
-USERNAME=$(cat ./ServerFiles/server-settings.json | jq -r '.username')
-TOKEN=$(cat ./ServerFiles/server-settings.json | jq -r '.token')
+USERNAME=$(cat /opt/factorio/data/server-settings.json | jq -r '.username')
+TOKEN=$(cat /opt/factorio/data/server-settings.json | jq -r '.token')
 
 #using jq to pull the mod names instead of the script's original grep solution
-enabled_mods=$(jq -r '.mods.[] | select(.enabled==true) | select(.name != null) | .name' $MODS_FOLDER/mod-list.json)
+enabled_mods=$(jq -r '.mods | .[] | select(.enabled==true) | select(.name != null) | .name' $MODS_FOLDER/mod-list.json)
 #removing base game files from the mod folder, at best they fail to do anything
 #at worst they break the server
 enabled_mods=$(echo "$enabled_mods" | sed s/"base"//)
