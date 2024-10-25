@@ -1,13 +1,24 @@
 #!/bin/bash
 # based HEAVILY off of JensForstmann's work here: https://github.com/JensForstmann/Factorio-Mod-Loader
 #. $(dirname "$0")/factorio-mod-loader.env
+
+#Setting the mods folder to the default for this build
 MODS_FOLDER=~/FactorioTest/ServerFiles/mods
+#Pulling the username and token from the server settings
 USERNAME=$(cat ./ServerFiles/server-settings.json | jq -r '.username')
 TOKEN=$(cat ./ServerFiles/server-settings.json | jq -r '.token')
 
-enabled_mods=$(cat "$MODS_FOLDER/mod-list.json" | grep -B 1 '"enabled": true' | grep '"name"' | sed 's/\s*"name":\s*"//' | sed 's/",//' | grep -v base)
+#using jq to pull the mod names instead of the script's original grep solution
+enabled_mods=$(jq -r '.mods.[] | select(.enabled==true) | select(.name != null) | .name' $MODS_FOLDER/mod-list.json)
+#removing base game files from the mod folder, at best they fail to do anything
+#at worst they break the server
+enabled_mods=$(echo "$enabled_mods" | sed s/"base"//)
+enabled_mods=$(echo "$enabled_mods" | sed s/"elevated-rails"//)
+enabled_mods=$(echo "$enabled_mods" | sed s/"quality"//)
+enabled_mods=$(echo "$enabled_mods" | sed s/"space-age"//)
+
 IFS=$'\n'
-for mod in $enabled_mods;
+for mod in $enabled_mods
 do
         echo $mod: get info...
         mod_info=$(wget -O - -o /dev/null "https://mods.factorio.com/api/mods/$mod")
