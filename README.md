@@ -21,19 +21,19 @@ Build might be a strong word, but we needs the files to run the Factorio dedicat
 You can either run build.sh (builds the image) and run.sh (turns the image into a container) seperately or run b, which does both sequentially. After that completes, the container should be up and the server should be functional.
 
 # Optional Steps/Usability Notes
+## Saves
 I've moved the saves into an external volume linked to the FactorioTest directory /saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC you can use scp in the Windows command line to transfer the file over. Open the saves folder in Explorer, right-click, "Open in Terminal" and do something like `scp savefile.zip linuxuser@linuxipaddress:/home/FactorioTest/`. You'll need to move the file into the /saves folder on the server side, as that will require sudo permissions to edit the volume.
 
-Mods are handled very similiarly to moving the save over. Download them on your local machine in game or through the mods site (https://mods.factorio.com). Go to %AppData%\factorio, open the folder in Terminal, `scp -r mods linuxuser@linuxipaddress:/home/`. You'll need to move the files into the /mods folder on the server side, as that will require sudo permissions to edit the volume. This move can be done en masse with `sudo cp -a ~/mods/. ~/FactorioTest/mods` ENSURE ALL MODS ARE COMPATIBLE WITH THE RELEASE THE SERVER IS ON, otherwise the server will fail to start. 
+## Mods
+The container now utilizes a script to update mods on creation and restart. Create the initial container to create the volumes (including for mods), then update the existing mod-list.json file or copy over a mod-list.json file with all of your desired mods on it to the FactorioTest/ServerFiles/mods directory. When the container is restarted or receated, the enabled mods in the list will be downloaded. In order for the script to authenticate for mod downloads, you must provide an authentication token in the server-settings.json file instead of a password. ENSURE ALL MODS ARE COMPATIBLE WITH THE RELEASE THE SERVER IS ON, otherwise the server will fail to start. To recover from this scenario, mods will need to be manually deleted out of the mods folder, disabled in the mod-list.json, and then restart the container or create a new one. If it fails to continue running, there is likely another conflicting mod. 
 
-Cloud Saves
+## Cloud Saves
 I've added an incredibly basic rclone script here, it just installs it and starts the configurator. rclone has a very friendly interface for setting up a connection to a cloud provider, and they have ample documentation on how to get that configured. I would suggest setting up a cronjob to copy the server save over at a regular interval. It should be as simple as putting a script file like:
-`rclone copy ..fill/in/path/to/FactorioTest/saves "NameOfrcloneRemoteConnection:/LocationInRemoteConnection"
-` into the appropriate cronjob folder, or setting up a crontab if you want it to run other than hourly or daily. 
+`rclone copy ..fill/in/path/to/FactorioTest/saves "NameOfrcloneRemoteConnection:/LocationInRemoteConnection"` into the appropriate cronjob folder, or setting up a crontab if you want it to run other than hourly or daily. 
 
-Public Connections
+## Public Connections
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
 
 # To Do
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods. 
-- see about automating mod updates (basing solution off of https://github.com/JensForstmann/Factorio-Mod-Loader), similarly would need to be a scheduled event to be hands off without breaking things - it needs work right now. Need to have it ignore more of the wube made things listed under mods
 - see about automating pushing new images to docker, making them is already done
