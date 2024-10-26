@@ -31,7 +31,7 @@ The container now utilizes a script to update mods on creation and restart. Crea
 
 ## Cloud Saves
 I've added an incredibly basic rclone script here, it just installs it and starts the configurator. rclone has a very friendly interface for setting up a connection to a cloud provider, and they have ample documentation on how to get that configured. I would suggest setting up a cronjob to copy the server save over at a regular interval. It should be as simple as putting a script file like:
-`rclone copy ..fill/in/path/to/FactorioTest/saves "NameOfrcloneRemoteConnection:/LocationInRemoteConnection"` into the appropriate cronjob folder, or setting up a crontab if you want it to run other than hourly or daily. If you intent on updating with a cronjob, either configure rclone as root or move/copy rclone's configuration file to root's .config folder.
+`rclone copy ..fill/in/path/to/FactorioTest/saves "NameOfrcloneRemoteConnection:/LocationInRemoteConnection"` into the appropriate cronjob folder, or setting up a crontab if you want it to run other than hourly or daily. If you intend running the copy/sync with a cronjob, either configure rclone as root or move/copy rclone's configuration file to root's .config folder so that it can run.
 
 ## Public Connections
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
