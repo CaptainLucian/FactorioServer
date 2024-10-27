@@ -41,3 +41,5 @@ If you want the server to be publically available, you will need to set up port 
 - see about automating pushing new images to docker, making them is already done
 - continue breaking out image creation and container creation, try deploying a container without the build tools to determine what dependencies still exist, ideally it should just be the docker-compose.yml and run.sh (which even then is just to not need to type it manually).
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
+- consider moving the factorio server download into the dockerfile, as it would negate the need for new images every patch. it would make container build slower, would also need to determine if it ALWAYS does it (would slow down restarts) or only if it doesn't find an existing instance.
+- potentially update the mod script to remove disabled mods automatically
