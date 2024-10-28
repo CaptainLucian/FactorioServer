@@ -14,7 +14,7 @@ ARG GROUP=factorio
 
 #taking my deployed server files and shoving them into this image
 #COPY factorio factorio
-COPY /ServerFiles/server-settings.json /opt/factorio/data/server-settings.json
+COPY ~/FactorioTest/ServerFiles/server-settings.json /opt/factorio/data/server-settings.json
 COPY ./factorio-mod-loader.sh /opt/
 COPY ./StartServer.sh /opt/
 
