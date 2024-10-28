@@ -12,7 +12,23 @@ services:
      - ./ServerFiles/server-settings.json:/opt/factorio/data/server-settings.json
     environment:
      - TZ=America/Chicago
-
+    cap_drop:
+     - ALL
+    cap_add:
+     - CHOWN
+     - dac_override
+     - fowner
+     - fsetid
+     - kill
+     - setgid
+     - setuid
+     - setpcap
+     - net_bind_service
+     - net_raw
+     - sys_chroot
+     - mknod
+     - audit_write
+     - setfcap
 volumes:
   save-data:
     external: true

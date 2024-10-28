@@ -3,14 +3,16 @@ FROM debian:stable-slim
 WORKDIR /opt
 
 RUN apt-get update && apt-get install -y bash
+#docker run --cap-drop all --cap-add CHOWN debian
 
 #Exposing Factorio's ports
 EXPOSE 34197/udp 
 EXPOSE 27015/tcp 
 
-#Adding a user to run the service, may not be needed?
+#Adding a user to run the service to reduce permissions available
 ARG USER=gamemaster
 ARG GROUP=factorio
+RUN useradd -ms /bin/bash gamemaster
 
 #taking my deployed server files and shoving them into this image
 #COPY factorio factorio
@@ -57,5 +59,10 @@ RUN ufw allow 34197/udp
 #RUN ufw enable
 RUN apt install jq -y
 #RUN apt install wget -y
+RUN chown gamemaster:gamemaster /opt -R
 
+USER gamemaster
 ENTRYPOINT /opt/StartServer.sh
+
+#Use this entrypoint instead if you need to keep the container running for troubleshooting
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
