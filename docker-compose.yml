@@ -29,6 +29,8 @@ services:
      - mknod
      - audit_write
      - setfcap
+    security_opt:
+     - no-new-privileges:false
 volumes:
   save-data:
     external: true
