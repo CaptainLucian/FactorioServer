@@ -37,9 +37,7 @@ I've added an incredibly basic rclone script here, it just installs it and start
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
 
 # To Do
-- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods. 
-- see about automating pushing new images to docker, making them is already done
-- continue breaking out image creation and container creation, try deploying a container without the build tools to determine what dependencies still exist, ideally it should just be the docker-compose.yml and run.sh (which even then is just to not need to type it manually).
+- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods. - if I don't need to rebuild the image, this could be easily handled server-side with a cron job to rebuild the container 
+- see about automating pushing new images to docker, making them is already done - confirm if this is still needed post patch, I get the feeling it might be
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
-- consider moving the factorio server download into the dockerfile, as it would negate the need for new images every patch. it would make container build slower, would also need to determine if it ALWAYS does it (would slow down restarts) or only if it doesn't find an existing instance.
 - potentially update the mod script to remove disabled mods automatically
