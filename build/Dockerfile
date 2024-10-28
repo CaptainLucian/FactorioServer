@@ -14,7 +14,7 @@ ARG GROUP=factorio
 
 #taking my deployed server files and shoving them into this image
 #COPY factorio factorio
-COPY ~/FactorioTest/ServerFiles/server-settings.json /opt/factorio/data/server-settings.json
+#COPY ./server-settings.json /opt/factorio/data/server-settings.json
 COPY ./factorio-mod-loader.sh /opt/
 COPY ./StartServer.sh /opt/
 
@@ -45,7 +45,7 @@ if [ -f /opt/factorio/data/server-settings.json ]
 then
         echo "server-settings.json already found"
 else
-        cp /opt/factorio/data/server-settings.example.json $basedir/factorio/data/server-settings.json
+        cp /opt/factorio/data/server-settings.example.json /opt/factorio/data/server-settings.json
 fi
 EOT
 #Preparing network configuration
