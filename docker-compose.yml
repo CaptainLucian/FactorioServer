@@ -31,6 +31,7 @@ services:
      - setfcap
     security_opt:
      - no-new-privileges:false
+    pids_limit: 30
 volumes:
   save-data:
     external: true

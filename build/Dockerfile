@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y bash
 
 #Exposing Factorio's ports
 EXPOSE 34197/udp 
-EXPOSE 27015/tcp 
+#EXPOSE 27015/tcp 
 
 #Adding a user to run the service to reduce permissions available
 ARG USER=gamemaster
@@ -58,7 +58,6 @@ RUN apt install fail2ban -y
 RUN ufw allow 34197/udp
 #RUN ufw enable
 RUN apt install jq -y
-#RUN apt install wget -y
 RUN chown gamemaster:gamemaster /opt -R
 
 USER gamemaster
