@@ -8,7 +8,7 @@ This set of scripts exists to
 1. Create an image of a Factorio server
 2. Create a container from that image that is now a functional Factorio server
 
-The scripts were made on and for an Ubuntu 24.04 LTS server, the dockerfile and docker-compose.yml file should be OS ag This also assumes docker is already installed.
+The scripts were made on and for an Ubuntu 24.04 LTS server, the dockerfile and docker-compose.yml file should be OS agnostic. These directions also assume that docker is already installed.
 
 The intent is that anything that needs to be user edited or persistant lives in the /ServerFiles subdirectory. 
 
