@@ -42,3 +42,4 @@ If you want the server to be publically available, you will need to set up port 
 - see about automating pushing new images to docker, making them is already done
 -- Alternatively, see if I can get a setup made that will just always deploy the current latest stable release every time, so the image doesn't need to be changed out. Would need to be specified in the docker-compose.yml file, if possible, though that's after the rights granted get reduced to a regular user
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
+- see if changing the volume to just cover the mod-list.json file allows the original update script to work as intended.
