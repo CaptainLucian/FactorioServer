@@ -40,4 +40,15 @@ do
         fi
 done
 unset IFS
+
+disabled_mods=$(jq -r '.mods | .[] | select(.enabled==false) | select(.name != null) | .name' $MODS_FOLDER/mod-list.json)
+IFS=$'\n'
+for mod in $disabled_mods
+do
+        echo $mod: Marked as disabled, removing...
+        mod_info=$(wget -O - -o /dev/null "https://mods.factorio.com/api/mods/$mod")
+        file_name=$(echo "$mod_info" | sed 's/"file_name":"/\n/g' | tail -1 | sed 's/".*//g')
+        rm -f $MODS_FOLDER/$file_name
+done
+unset IFS
 echo finished...
