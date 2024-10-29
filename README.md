@@ -38,6 +38,6 @@ If you want the server to be publically available, you will need to set up port 
 
 # To Do
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods. - if I don't need to rebuild the image, this could be easily handled server-side with a cron job to rebuild the container 
-- see about automating pushing new images to docker, making them is already done - confirm if this is still needed post patch, I get the feeling it might be
+- see about automating pushing new images to docker, making them is already done - confirm if this is still needed post patch, I get the feeling it might be. that's going to be the issue with this repo, I'm not going to have a server on perpetually to build new versions...
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
 - potentially update the mod script to remove disabled mods automatically
