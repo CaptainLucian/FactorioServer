@@ -17,7 +17,7 @@ RUN useradd -ms /bin/bash gamemaster
 #taking my deployed server files and shoving them into this image
 #COPY factorio factorio
 #COPY ./server-settings.json /opt/factorio/data/server-settings.json
-COPY ./factorio-mod-loader.sh /opt/
+COPY ./mod-update-internal.sh /opt/
 COPY ./StartServer.sh /opt/
 
 SHELL ["/bin/bash", "-c"]
