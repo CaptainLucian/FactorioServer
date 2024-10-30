@@ -8,7 +8,7 @@ This set of scripts exists to
 1. Create an image of a Factorio server
 2. Create a container from that image that is now a functional Factorio server
 
-The scripts were made on and for an Ubuntu 24.04 LTS server, the dockerfile and docker-compose.yml file should be OS ag This also assumes docker is already installed.
+The scripts were made on and for an Ubuntu 24.04 LTS server, the dockerfile and docker-compose.yml file should be OS agnostic. These directions also assume that docker is already installed.
 
 The intent is that anything that needs to be user edited or persistant lives in the /ServerFiles subdirectory. 
 
@@ -42,4 +42,4 @@ If you want the server to be publically available, you will need to set up port 
 - see about automating pushing new images to docker, making them is already done
 -- Alternatively, see if I can get a setup made that will just always deploy the current latest stable release every time, so the image doesn't need to be changed out. Would need to be specified in the docker-compose.yml file, if possible, though that's after the rights granted get reduced to a regular user
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
-- potentially update the mod script to remove disabled mods automatically
+- see if changing the volume to just cover the mod-list.json file allows the original update script to work as intended.
