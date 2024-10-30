@@ -3,7 +3,6 @@ FROM debian:stable-slim
 WORKDIR /opt
 
 RUN apt-get update && apt-get install -y bash
-#docker run --cap-drop all --cap-add CHOWN debian
 
 #Exposing Factorio's ports
 EXPOSE 34197/udp 
@@ -53,15 +52,13 @@ EOT
 #Preparing network configuration
 RUN apt install ufw -y
 RUN apt install fail2ban -y
-#RUN apt install ufw -y
-#RUN ufw allow openssh
 RUN ufw allow 34197/udp
-#RUN ufw enable
 RUN apt install jq -y
+#RUN mkdir /opt/factorio
 RUN chown gamemaster:gamemaster /opt -R
-
+RUN chown gamemaster:gamemaster /opt/factorio -R
 USER gamemaster
-ENTRYPOINT /opt/StartServer.sh
+#ENTRYPOINT /opt/StartServer.sh
 
 #Use this entrypoint instead if you need to keep the container running for troubleshooting
-#ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]

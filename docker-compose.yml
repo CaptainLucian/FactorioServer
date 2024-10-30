@@ -8,7 +8,7 @@ services:
      - "34197:34197/udp"
     volumes:
      - ./ServerFiles/saves:/opt/factorio/saves
-     - ./ServerFiles/mods:/opt/factorio/mods
+     - ./ServerFiles/mods/mod-list.json:/opt/factorio/mods/mod-list.json
      - ./ServerFiles/server-settings.json:/opt/factorio/data/server-settings.json
     environment:
      - TZ=America/Chicago
