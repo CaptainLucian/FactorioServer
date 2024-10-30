@@ -11,7 +11,8 @@ EXPOSE 34197/udp
 #Adding a user to run the service to reduce permissions available
 ARG USER=gamemaster
 ARG GROUP=factorio
-RUN useradd -ms /bin/bash gamemaster
+RUN addgroup -gid 8675 factorio
+RUN useradd -ms /bin/bash gamemaster -G factorio -u 5505
 
 #taking my deployed server files and shoving them into this image
 #COPY factorio factorio
@@ -55,7 +56,8 @@ RUN apt install fail2ban -y
 RUN ufw allow 34197/udp
 RUN apt install jq -y
 #RUN mkdir /opt/factorio
-RUN chown gamemaster:gamemaster /opt -R
+RUN chown gamemaster:factorio /opt -R
+#RUN chown gamemaster:factorio /opt/factorio/saves/* -R
 #RUN chown gamemaster:gamemaster /opt/factorio -R
 #Changing to a user that has less access. If someone gets into the container that shouldn't they can't do as much
 USER gamemaster

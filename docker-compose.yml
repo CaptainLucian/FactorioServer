@@ -31,7 +31,7 @@ services:
      - setfcap
     security_opt:
      - no-new-privileges:false
-    pids_limit: 30 #set the max amount of processes able to be run, to limit damage of a hack attempt
+    pids_limit: 35 #set the max amount of processes able to be run, to limit damage of a hack attempt
 volumes:
   save-data:
     external: true
