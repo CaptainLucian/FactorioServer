@@ -26,9 +26,14 @@ Run the /FactorioServer/run.sh script or a similiar command `sudo docker-compose
 I've moved the saves into an external volume linked to the FactorioTest directory ServerFiles/saves. To have the server host something other than a basic map, you can place an initial save zip file in here. To copy it from a PC you can use scp in the Windows command line to transfer the file over. Open the saves folder in Explorer, right-click, "Open in Terminal" and do something like `scp savefile.zip linuxuser@linuxipaddress:/home/linuxuser/FactorioServer/`. You'll need to move the file into the /saves folder on the server side, as that will require sudo permissions to edit the volume.
 
 ## Mods
-Create the initial container to create the volumes (including for mods), then update the existing mod-list.json file or copy over a mod-list.json file with all of your desired mods on it to the FactorioServer/ServerFiles/mods directory. Run the factorio-mod-update.sh script in the FactorioServer repository with sudo privledges to update enabled mods and delete disabled mods. In order for the script to authenticate for mod downloads, you must provide an authentication token in the server-settings.json file instead of a password. ENSURE ALL MODS ARE COMPATIBLE WITH THE RELEASE THE SERVER IS ON, otherwise the server will fail to start. The suggested usage of this script is to run as an automated cronjob set to your desired update cadence.
+There are two methodolgies available to handle mods with this build. 
+#1 - Default
+By default, you will only be able to access the mod-list.json file that is being used to run the server in the ServerFiles/mods folder. By adding items to the JSON file or disabling mods you can manage what the script will download. When you create the container intially or whenever you restart it, the script (mod-update-internal.sh) will run to update the mods and download any missing mods that are enabled in the list. To authenticate to download the mods, it will require that your server-settings.json file is configured with your token. 
 
-If you would prefer ease of use over a more secure container, open the Dockerfile in /build and comment out the line USER gamemaster. This will allow the container to run as root, giving it the access needed to manage files in a write protected volume. The script to perform the update will be run when the container is updated or restarted. 
+#2 - See full mod folder/run updates externally
+The other method for handling mods in this configuration is to change the volume defined in the docker-compose.yml file from covering just the mod-list.json file to covering the entire mods folder. This method requires that mod updates and downloads are handled outside of container through the factorio-mod-update.sh script, as the user running the container will not have access to delete files within a volume. 
+
+Regardless of method, ensure that all mods set to be used are compatible with the server or the container will immediately stop as it will have failed to run the server process. To troubleshoot from this scenario, disable mods from the mod-list.json file and restart the container `sudo docker restart the_factory` to get the server into a working state again.
 
 ## Cloud Saves
 I've added an incredibly basic rclone script here, it just installs it and starts the configurator. rclone has a very friendly interface for setting up a connection to a cloud provider, and they have ample documentation on how to get that configured. I would suggest setting up a cronjob to copy the server save over at a regular interval. It should be as simple as putting a script file like:
@@ -42,4 +47,4 @@ If you want the server to be publically available, you will need to set up port 
 - see about automating pushing new images to docker, making them is already done
 -- Alternatively, see if I can get a setup made that will just always deploy the current latest stable release every time, so the image doesn't need to be changed out. Would need to be specified in the docker-compose.yml file, if possible, though that's after the rights granted get reduced to a regular user
 - work through OWASP Security suggestions for containers https://cheatsheetseries.owasp.org/cheatsheets/Docker_Security_Cheat_Sheet.html
-- see if changing the volume to just cover the mod-list.json file allows the original update script to work as intended.
+- look into making the mod list handle mods being removed from the list outright instead of being disabled
