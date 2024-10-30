@@ -29,9 +29,11 @@ I've moved the saves into an external volume linked to the FactorioTest director
 There are two methodolgies available to handle mods with this build. 
 
 #1 - Default
+
 By default, you will only be able to access the mod-list.json file that is being used to run the server in the ServerFiles/mods folder. By adding items to the JSON file or disabling mods you can manage what the script will download. When you create the container intially or whenever you restart it, the script (mod-update-internal.sh) will run to update the mods and download any missing mods that are enabled in the list. To authenticate to download the mods, it will require that your server-settings.json file is configured with your token. 
 
 #2 - See full mod folder/run updates externally
+
 The other method for handling mods in this configuration is to change the volume defined in the docker-compose.yml file from covering just the mod-list.json file to covering the entire mods folder. This method requires that mod updates and downloads are handled outside of container through the factorio-mod-update.sh script, as the user running the container will not have access to delete files within a volume. 
 
 Regardless of method, ensure that all mods set to be used are compatible with the server or the container will immediately stop as it will have failed to run the server process. To troubleshoot from this scenario, disable mods from the mod-list.json file and restart the container `sudo docker restart the_factory` to get the server into a working state again.
