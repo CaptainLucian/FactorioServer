@@ -27,6 +27,7 @@ I've moved the saves into an external volume linked to the FactorioTest director
 
 ## Mods
 There are two methodolgies available to handle mods with this build. 
+
 #1 - Default
 By default, you will only be able to access the mod-list.json file that is being used to run the server in the ServerFiles/mods folder. By adding items to the JSON file or disabling mods you can manage what the script will download. When you create the container intially or whenever you restart it, the script (mod-update-internal.sh) will run to update the mods and download any missing mods that are enabled in the list. To authenticate to download the mods, it will require that your server-settings.json file is configured with your token. 
 
