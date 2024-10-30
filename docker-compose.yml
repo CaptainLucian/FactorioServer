@@ -12,9 +12,9 @@ services:
      - ./ServerFiles/server-settings.json:/opt/factorio/data/server-settings.json
     environment:
      - TZ=America/Chicago
-    cap_drop:
+    cap_drop: #removing all linux kernel capabilities for security
      - ALL
-    cap_add:
+    cap_add: #adding back the linux kernel capabilities Factorio needs
      - CHOWN
      - dac_override
      - fowner
@@ -31,7 +31,7 @@ services:
      - setfcap
     security_opt:
      - no-new-privileges:false
-    pids_limit: 30
+    pids_limit: 30 #set the max amount of processes able to be run, to limit damage of a hack attempt
 volumes:
   save-data:
     external: true

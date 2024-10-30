@@ -56,9 +56,11 @@ RUN ufw allow 34197/udp
 RUN apt install jq -y
 #RUN mkdir /opt/factorio
 RUN chown gamemaster:gamemaster /opt -R
-RUN chown gamemaster:gamemaster /opt/factorio -R
+#RUN chown gamemaster:gamemaster /opt/factorio -R
+#Changing to a user that has less access. If someone gets into the container that shouldn't they can't do as much
 USER gamemaster
-#ENTRYPOINT /opt/StartServer.sh
+#Launching the StartServer script that runs the mod updater and then starts the server process
+ENTRYPOINT /opt/StartServer.sh
 
 #Use this entrypoint instead if you need to keep the container running for troubleshooting
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+#ENTRYPOINT ["tail", "-f", "/dev/null"]
