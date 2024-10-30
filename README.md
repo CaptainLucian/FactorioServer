@@ -46,6 +46,6 @@ I've added an incredibly basic rclone script here, it just installs it and start
 If you want the server to be publically available, you will need to set up port forwarding on your router to the server. There are plenty of guides available on the process. 
 
 # To Do
-- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - could break the server if mods aren't compatible with the new release though, could be possible to have it check to see if the server start command failed, and if so either relocate or delete the mods.
+- see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - https://wiki.factorio.com/Download_API
 - see about automating pushing new images to docker, making them is already done
 -- Alternatively, see if I can get a setup made that will just always deploy the current latest stable release every time, so the image doesn't need to be changed out. Would need to be specified in the docker-compose.yml file, if possible, though that's after the rights granted get reduced to a regular user
