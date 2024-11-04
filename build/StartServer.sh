@@ -1,4 +1,11 @@
 #!/bin/bash
+/opt/BuildMe.sh
+#if [ -d /opt/factorio/bin ]
+#then
+#	#rebuilding
+#else
+#	/opt/BuildMe.sh
+#fi
 sleep 5
 /opt/mod-update-internal.sh
 sleep 1
