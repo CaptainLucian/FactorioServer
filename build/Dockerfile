@@ -12,23 +12,34 @@ EXPOSE 34197/udp
 RUN addgroup -gid 8675 factorio
 RUN useradd -ms /bin/bash gamemaster -G factorio -u 5505
 
-#taking my deployed server files and shoving them into this image
-#COPY factorio factorio
-#COPY ./server-settings.json /opt/factorio/data/server-settings.json
-COPY ./mod-update-internal.sh /opt/
-COPY ./StartServer.sh /opt/
-#Ideally I want this build process to happen in the container, so a new image isn't needed for every new release
-#but due to reducing the user privileges that's not feasible
-COPY ./BuildMe.sh /opt/
+#Adding required scripts to the image
 
-#Setting shell to Bash, because I know it
+#Scipt that updates mods in /opt/factorio/mods
+COPY ./mod-update-internal.sh /opt/
+#Script that downloads and extracts latest Factorio stable server
+COPY ./BuildMe.sh /opt/
+#Script that runs the download command, mod update command, and then starts the server process
+COPY ./StartServer.sh /opt/
+
+# Setting shell to Bash
 SHELL ["/bin/bash", "-c"]
 
-#Installing server file download dependencies
-RUN apt install wget -y
+# Installing server file download dependencies
+#Needed to download files
+RUN apt install wget -y 
+# Needed to extract the tar.xz the files are in
 RUN apt install xz-utils -y
+# Needed for networking
+RUN apt install ufw -y
+# Needed to allow connections
+RUN ufw allow 34197/udp
+# Needed to retrieve username and token from server-settings.json to download mods
+RUN apt install jq -y
+# Intended to add security
+RUN apt install fail2ban -y
 
-#Downloading Factorio Server files
+
+#Old downloading logic Downloading Factorio Server files
 #RUN <<EOT bash
 #wget -c https://factorio.com/get-download/stable/headless/linux64 -O factorio-server.tar.xz
 #RUN wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
@@ -53,14 +64,10 @@ RUN apt install xz-utils -y
 #        cp /opt/factorio/data/server-settings.example.json /opt/factorio/data/server-settings.json
 #fi
 #EOT
-#Preparing network configuration
-RUN apt install ufw -y
-RUN apt install fail2ban -y
-RUN ufw allow 34197/udp
-RUN apt install jq -y
+
+#Creating directories and managing permissions
 RUN mkdir /opt/factorio
 RUN mkdir /opt/factorio/data
-#RUN mkdir /opt/factorio
 RUN chown -R 5505:8675 /opt -R
 
 #Changing to a user that has less access. If someone gets into the container that shouldn't they can't do as much
