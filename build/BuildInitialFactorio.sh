@@ -1,4 +1,5 @@
 #!/bin/bash
+# Script created when then build method was to download the files and then put them into the container
 basedir=$(pwd)
 echo "Thanks for the write up /u/Gremia!"
 #echo "Setting network permissions.."

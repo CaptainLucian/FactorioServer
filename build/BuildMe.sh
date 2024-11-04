@@ -1,8 +1,12 @@
- #!/bin/bash
+#!/bin/bash
+# Downloads the latest stable server files
 wget -c https://factorio.com/get-download/stable/headless/linux64 -O factorio-server.tar.xz
-#RUN wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
+# This is the permenent link for the latest experiemental files
+#wget -c https://www.factorio.com/get-download/latest/headless/linux64 -O factorio-server.tar.xz
+# Extracts the server files
 xzcat factorio-server.tar.xz | tar xvf -
 rm factorio-server.tar.xz
+# Checks to see if the saves directory exists and if it is empty, will create a new save if it is
 if [ -d /opt/factorio/saves ]
 then
         echo "skipping save creation"

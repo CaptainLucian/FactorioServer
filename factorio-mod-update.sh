@@ -1,6 +1,6 @@
 #!/bin/bash
 # based HEAVILY off of JensForstmann's work here: https://github.com/JensForstmann/Factorio-Mod-Loader
-#. $(dirname "$0")/factorio-mod-loader.env
+# Use this script only if you want to manage mod updates outside of the container restarts
 
 #Setting the mods folder to the default for this build
 CONFIG_FOLDER=/home/captain/FactorioServer/ServerFiles
