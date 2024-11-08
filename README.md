@@ -49,8 +49,11 @@ Run the build.sh script or a similiar command from the /FactorioServer/build dir
 Run the /FactorioServer/run.sh script or a similiar command `sudo docker-compose -f docker-compose.yml up -d` to use what is in the docker-compose.yml file to deploy the image you built. Use `sudo docker ps` to confirm that the container is running. Note that if you did not use the run.sh script or alter how the container is being run (as gamemaster vs as root), you will encounter permissions issues on the directories that are volumes. Part of that script is to give the user running the container permissions to update those locations.
 
 # WSL
-If you intend to run the set up in a WSL set up, you will run into the need for some additional set up. By default, after installing Docker the Docker Daemon will not be started when you start the WSL instance. To correct this, you will need to either start the service on a one off basis `sudo service docker start` or set it up in a /etc/wsl.conf file. 
+If you intend to run the set up in a WSL set up, you will run into the need for some additional set up. By default, after installing Docker the Docker Daemon will not be started when you start the WSL instance. To correct this, you will need to either start the service on a one off basis `sudo service docker start` or set it up in a /etc/wsl.conf file.
 
+The run.sh script will need to be edited from docker-compose to docker compose to create the container.
+
+The map creation command is failing in WSL hosted instances, so a save will need to be manually added for it to work.
 
 # To Do
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - https://wiki.factorio.com/Download_API
