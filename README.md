@@ -59,4 +59,5 @@ The map creation command is failing in WSL hosted instances, so a save will need
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - https://wiki.factorio.com/Download_API
  -- I should still poke at that, though the new methodology doesn't make it as needed. I could have a script to auto restart the container when needed though.
 
+- work through inventory.yml configuration for the ansible deployment. ideally switching it to ssh key auth.
   
