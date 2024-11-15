@@ -1,0 +1,77 @@
+- name: Update System
+  hosts: all
+  become: true
+  roles:
+    - geerlingguy.docker
+  gather_facts: yes
+
+  tasks:
+    - name: Update System
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400
+
+    - name: Downloading Factorio Server Image
+      docker_image:
+        name: "captainlucian/factorio-server"
+        source: pull
+        tag: latest
+
+    - name: Removing Existing Instances...
+      docker_container:
+        name: the_factory
+        state: absent
+
+    - name: Setting Permissions - Saves
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves
+        state: directory
+        recurse: yes
+        owner: 5505
+        group: 8675
+
+    - name: Setting Permissions - Server Settings
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/FactorioServer/ServerFiles/server-settings.json
+        owner: 5505
+        group: 8675
+        mode: '0644'
+
+    - name: Setting Permissions - Mods
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods
+        state: directory
+        recurse: yes
+        owner: 5505
+        group: 8675
+
+    - name: Start Container
+      docker_container:
+        name: "the_factory"
+        image: "captainlucian/factorio-server:latest"
+        volumes:
+          - /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves:/opt/factorio/saves
+          - /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods:/opt/factorio/mods/
+          - /home/{{ ansible_user }}/FactorioServer/ServerFiles/server-settings.json:/opt/factorio/data/server-settings.json
+        cap_drop:
+          - all
+        capabilities:
+          - CHOWN
+          - dac_override
+          - fowner
+          - fsetid
+          - kill
+          - setgid
+          - setuid
+          - setpcap
+          - net_bind_service
+          - net_raw
+          - sys_chroot
+          - mknod
+          - audit_write
+          - setfcap
+        ports:
+          - "34197:34197/udp"
+        pids_limit: 35
+        state: started
