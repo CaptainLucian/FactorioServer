@@ -58,7 +58,7 @@ The map creation command is failing in WSL hosted instances, so a save will need
 # Ansible
 If you would rather deploy the Factorio Server to a Linux server remotely, you can use the ansible playbook provided in the ansible directory. Inside of the ansible directory is the template for an inventory file, update the ansible_host value with your intended server, and update the ansible_user value with the user for that server. If you intend to user a username/password authentication, you will need to add the ansible_sudo_pass variable to the inventory file, or if you would prefer to do SSH key auth, refer to the security section below. Run the LocalDependencies.sh script to install Ansible and the community collections and roles used within the playbook. Once that has been done, run  `ansible-playbook playbook.yml -i ~/FactorioServer/ansible/inventory.yml` from the ansible directory to start the deployment process. If everything was configured correctly, the server should now be functional! ** This isn't true just yet, I'm just pre-emptively updating the documenation while other parts are fresh in my head.
 
-## Securing the Ansible Inventory
+## Securing the Ansible Inventory File
 To make the Ansible inventory.yml file more secure there are two major options, to use a key vault (for username/password authentication) or to use SSH keys. You can further lock down the security on the endpoint server through the SSH key method, so that would be my suggestion as it is also simplier, though if you no longer have the key you will no longer be able to remotely log into the server at all. 
 
 ### Configure the keys
