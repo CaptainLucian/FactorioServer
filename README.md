@@ -55,9 +55,23 @@ The run.sh script will need to be edited from docker-compose to docker compose t
 
 The map creation command is failing in WSL hosted instances, so a save will need to be manually added for it to work.
 
+# Ansible
+If you would rather deploy the Factorio Server to a Linux server remotely, you can use the ansible playbook provided in the ansible directory. Inside of the ansible directory is the template for an inventory file, update the ansible_host value with your intended server, and update the ansible_user value with the user for that server. If you intend to user a username/password authentication, you will need to add the ansible_sudo_pass variable to the inventory file, or if you would prefer to do SSH key auth, refer to the security section below. Run the LocalDependencies.sh script to install Ansible and the community collections and roles used within the playbook. Once that has been done, run  `ansible-playbook playbook.yml -i ~/FactorioServer/ansible/inventory.yml` from the ansible directory to start the deployment process. If everything was configured correctly, the server should now be functional! ** This isn't true just yet, I'm just pre-emptively updating the documenation while other parts are fresh in my head.
+
+## Securing the Ansible Inventory
+To make the Ansible inventory.yml file more secure there are two major options, to use a key vault (for username/password authentication) or to use SSH keys. You can further lock down the security on the endpoint server through the SSH key method, so that would be my suggestion as it is also simplier, though if you no longer have the key you will no longer be able to remotely log into the server at all. 
+
+### Configure the keys
+To start with, you'll need to generate keys on your local system that you are using to ssh into the endpoint server. You can do this with a simple command `ssh-keygen -t ed25519`, though if desired you could use other keygen options. From here, use the built in command ssh-copy-id `ssh-copy-id username@remote_host` to copy your public key to the server. You may need to update the permissions on those files on the endpoint server, ssh to it (hopefully you will not be prompted for a password), and then run `chmod 700 ~/.ssh` and `chmod 600 ~/.ssh/authorized_keys` to set the permissions. You should now be able to ssh into the endpoint server without providing a password!
+
+### Granting sudo Access And Locking Down The System
+In order for the Ansible script to do everything it needs to, it needs to utilize sudo permissions. To do that with ONLY ssh key authentication the user on the endpoint server will need to be configured to utilize sudo access without needing a password, which isn't ideal for security but can be mitigated with further changes. 
+
+On the endpoint server, do `sudo nano /etc/sudousers` and add your user under the sudo entry, listed like "user ALL=(ALL) NOPASSWD: ALL". After saving that edit, confim that sudo actions no longer need authentication. To reduce the security concerns over no longer requiring a password, remove the ability to ssh into the server through password authentication. On the endpoint server, run `sudo nano /etc/ssh/sshd_config` and change #PasswordAuthentication yes to #PasswordAuthentication no. Then run `sudo nano /etc/ssh/sshd_config.d/50-cloud-init.conf` and set password authentication to no. Lastly restart SSH with `sudo service ssh restart` and your server should no longer be able to be ssh'd to without the key. 
+
+
 # To Do
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - https://wiki.factorio.com/Download_API
  -- I should still poke at that, though the new methodology doesn't make it as needed. I could have a script to auto restart the container when needed though.
 
-- work through inventory.yml configuration for the ansible deployment. ideally switching it to ssh key auth.
 - get the ansible playbook to download the required files from this repository onto the host machine (just the ServerFiles directory and files)
