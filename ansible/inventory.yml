@@ -1,0 +1,6 @@
+factorio_servers:
+  hosts:
+    server1:
+      ansible_host: IPorHostname
+      ansible_user: ServerUserName
+      ansible_connection: ssh
