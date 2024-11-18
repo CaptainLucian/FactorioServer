@@ -12,16 +12,34 @@
         update_cache: yes
         cache_valid_time: 86400
 
+    - name: Install Fail2Ban
+      ansible.builtin.apt:
+        name: fail2ban
+        state: latest
+
     - name: Downloading Factorio Server Image
       docker_image:
         name: "captainlucian/factorio-server"
         source: pull
         tag: latest
 
+    - name: Restarting Docker Daemon
+      ansible.builtin.service:
+        name: docker
+        state: restarted
+
     - name: Removing Existing Instances...
       docker_container:
         name: the_factory
         state: absent
+
+
+    - name: Cloning Repo (CaptainLucian/FactorioServer)
+      ansible.builtin.git:
+        repo: https://github.com/CaptainLucian/FactorioServer.git
+        dest: /home/{{ ansible_user }}/FactorioServer
+        clone: yes
+        update: no
 
     - name: Setting Permissions - Saves
       ansible.builtin.file:
