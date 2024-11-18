@@ -74,4 +74,6 @@ On the endpoint server, do `sudo nano /etc/sudousers` and add your user under th
 - see about automating updates, if I can't tell if a version changes then maybe default to nightly new containers? - https://wiki.factorio.com/Download_API
  -- I should still poke at that, though the new methodology doesn't make it as needed. I could have a script to auto restart the container when needed though.
 
-- get the ansible playbook to download the required files from this repository onto the host machine (just the ServerFiles directory and files)
+- determine if there is a better method to configure the server-settings file that doesn't require sshing to the hosting server.
+
+- investigate permissions issues with stopping containers after change to ssh key auth
