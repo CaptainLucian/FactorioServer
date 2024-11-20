@@ -34,12 +34,28 @@
         state: absent
 
 
-    - name: Cloning Repo (CaptainLucian/FactorioServer)
-      ansible.builtin.git:
-        repo: https://github.com/CaptainLucian/FactorioServer.git
-        dest: /home/{{ ansible_user }}/FactorioServer
-        clone: yes
-        update: no
+#    - name: Cloning Repo (CaptainLucian/FactorioServer)
+#      ansible.builtin.git:
+#        repo: https://github.com/CaptainLucian/FactorioServer.git
+#        dest: /home/{{ ansible_user }}/FactorioServer
+#        clone: yes
+#        update: no
+
+    - name: Copy ServerFiles Directory - Mods
+      ansible.builtin.copy:
+        src: ~/FactorioServer/ServerFiles/mods
+        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods
+
+    - name: Copy ServerFiles Directory - Server Settings
+      ansible.builtin.copy:
+        src: ~/FactorioServer/ServerFiles/server-settings.json
+        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/server-settings.json
+
+# Enable only if you have no existing saves on the server that you would prefer to use
+#    - name: Copy ServerFiles Directory - Saves
+#      ansible.builtin.copy:
+#        src: ~/FactorioServer/ServerFiles/saves
+#        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves
 
     - name: Setting Permissions - Saves
       ansible.builtin.file:
@@ -92,4 +108,5 @@
         ports:
           - "34197:34197/udp"
         pids_limit: 35
+        detach: true
         state: started
