@@ -41,21 +41,33 @@
 #        clone: yes
 #        update: no
 
-    - name: Copy ServerFiles Directory - Mods
-      ansible.builtin.copy:
-        src: ~/FactorioServer/ServerFiles/mods
-        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods
+    - name: Create ServerFiles - Mods
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods
+        state: directory
+        mode: '0755'
+
+    - name: Create ServerFiles Directory - Saves
+      ansible.builtin.file:
+        path: /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves
+        state: directory
+        mode: '0755'
 
     - name: Copy ServerFiles Directory - Server Settings
       ansible.builtin.copy:
         src: ~/FactorioServer/ServerFiles/server-settings.json
         dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/server-settings.json
 
+    - name: Copy ServerFiles Directory - Mods
+      ansible.builtin.copy:
+        src: ~/FactorioServer/ServerFiles/mods/mod-list.json
+        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/mods/mod-list.json
+
 # Enable only if you have no existing saves on the server that you would prefer to use
-#    - name: Copy ServerFiles Directory - Saves
-#      ansible.builtin.copy:
-#        src: ~/FactorioServer/ServerFiles/saves
-#        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves
+    - name: Copy ServerFiles Directory - Saves
+      ansible.builtin.copy:
+        src: ~/FactorioServer/ServerFiles/saves
+        dest: /home/{{ ansible_user }}/FactorioServer/ServerFiles/saves
 
     - name: Setting Permissions - Saves
       ansible.builtin.file:
