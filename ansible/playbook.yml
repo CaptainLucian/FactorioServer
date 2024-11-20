@@ -33,7 +33,7 @@
         name: the_factory
         state: absent
 
-
+# Likely no longer needed. This could be used instead if it is preferred over the copying method in the next 3 tasks
 #    - name: Cloning Repo (CaptainLucian/FactorioServer)
 #      ansible.builtin.git:
 #        repo: https://github.com/CaptainLucian/FactorioServer.git
