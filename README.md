@@ -76,4 +76,4 @@ On the endpoint server, do `sudo nano /etc/sudousers` and add your user under th
 
 - determine if there is a better method to configure the server-settings file that doesn't require sshing to the hosting server.
 
-- investigate permissions issues with stopping containers after change to ssh key auth
+- investigate permissions issues with stopping containers after change to ssh key auth -- this was due to app armor (https://forums.docker.com/t/can-not-stop-docker-container-permission-denied-error/41142/5)
